@@ -23,7 +23,7 @@ Todo List
                         <button type="button" class="btn btn-light">{{things.item}}</button>
                     </a></td> 
                     <td><center><a href="{% url 'uncross' things.id %}">
-                        <button type="button" class="btn btn-light">Uncross</button>
+                        <button type="button" class="btn btn-light">Mark Undone</button>
                     </a></center></td>
                     <td><center><a href="{% url 'delete' things.id %}">
                         <button type="button" class="btn btn-light">Delete</button>
@@ -35,7 +35,7 @@ Todo List
                         <button type="button" class="btn btn-light">{{things.item}}</button>
                     </a></td> 
                     <td><center><a href="{% url 'cross_off' things.id %}">
-                        <button type="button" class="btn btn-light">Cross Off</button>
+                        <button type="button" class="btn btn-light">Mark Done</button>
                     </a></center></td>
                     <td><center><a href="{% url 'delete' things.id %}">
                         <button type="button" class="btn btn-light">Delete</button>
