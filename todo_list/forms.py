@@ -1,4 +1,4 @@
-from socket import fromshare
+# from socket import fromshare
 from typing import List
 from django import forms
 from .models import List
