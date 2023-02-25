@@ -53,7 +53,8 @@ def edit(request, list_id):
             form.save()
             messages.success(request,('Item Has Been Edited'))
             return redirect('home') 
+            # return render(request, 'edit.html', {'all_items': all_items});
     
     else:        
         item = List.objects.get(pk=list_id)
-        return render(request, 'edit.html',{'items': item})
+        return render(request, 'edit.html',{'item': item})
