@@ -1,0 +1,52 @@
+(Windows 11){in the directory which has the application}
+* Create a directory.
+* Install virtual environment using <pip install virtualenv>.
+* Create virtual environment using <virtualenv .>.
+* Use <python -m venv (name_of_the_virtual_environment)>.
+* Activate virtual environment using <source venv/Scripts/activate>.
+* Install django using <pip install django>.
+* Start project using <django-admin startproject (project_name)>.{A new directory is created}
+* Run server with <python manage.py runserver>.{localhost:8000}
+* Create superuser using <python manage.py migrate>, <python manage.py createsuperuser>.
+	{IN CASE OF FORGETTING BOTH USERNAME AND PASSWORD type the following in python shell using <python manage.py shell>}
+		>>> from django.contrib.auth import get_user_model
+		>>> list(get_user_model().objects.filter(is_superuser=True).values_list('username',flat=True))
+		['user_name']
+		>>> from django.contrib.auth import get_user_model
+		>>> def reset_password(u, password):
+		...	try:
+		...		user = get_user_model().objects.get(username=u)
+		...	except:
+		...		return "User could not be found"
+		...	user.set_password(password)
+		...	user.save()
+		...	return "Password has been changed successfully"
+		...
+		>>> reset_password('user_name', 'new_password')
+		'Password has been changed successfully'
+	{Exit shell using exit () or ctrl+z plus enter}
+* Create an app(module for adding something) using <python manage.py startapp {app_name)>.
+>>(In git bash)
+* Use <python manage.py startapp lookup>.
+* Use <git config --global user.name (Enter_name)>.
+* Use <git config --global user.email (Enter_mail)>.
+* Use <git config --global push.default matching>.
+* Use <git config --global alias.co checkout>.
+* Use <git init>.
+* Use mkdir <~/.ssh>, move into the directory.
+* generate ssh keys using <ssh-keygen.exe>.
+* Use cat and type in the name of the public key (key.pub) then copy the key.
+* Get into SSH and GPG keys in settings and paste that key there.
+* copy the commands for {push an existing repository} from github to the command line.
+* If you want to remove something added to git using <git add (file_name)>
+you can undo it by using <git restore --staged (file_name)>
+<<
+>>(Normal way to push)
+* Initialize local repository as git repository by using <git init> in the working directory.
+* Add files to git repository <git add .>.
+* Use <git status> for info, commit files from local repository using <git commit -m "First commit">.
+* Copy the remote repository url from github.
+* Type in <git remote add origin (copied_url)>.
+* Push code using <git push -u origin master>.
+* Enter username and password, the files have now been added to github.
+<<
