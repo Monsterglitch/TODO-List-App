@@ -4,5 +4,11 @@ About
 {% endblock %}
 
 {% block content %}
+{% load static %}
+<img  
+    src="{% static 'todo_list_app/profile.png' %}" 
+    alt="My image"
+>
 <p>This is a simple TODO List application built using Django</p>
 {% endblock %}
+    
