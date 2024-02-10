@@ -28,7 +28,7 @@ def about(request):
 def delete(request, list_id):
     item = List.objects.get(pk=list_id)
     item.delete()
-    messages.success(request, ('Item Has Been Deleted!'))
+    # messages.success(request, ('Item Has Been Deleted!'))
     return redirect('home')
 
 def cross_off(request, list_id):
@@ -51,7 +51,7 @@ def edit(request, list_id):
 
         if form.is_valid():
             form.save()
-            messages.success(request,('Item Has Been Edited'))
+            # messages.success(request,('Item Has Been Edited'))
             return redirect('home') 
             # return render(request, 'edit.html', {'all_items': all_items});
     

@@ -6,10 +6,7 @@ Todo List
 {% block content %}
 {% if messages %}
     {% for message in messages %}
-        <!-- <div class="alert alert-warning alert-dismissable" role="alert">    
-            <button class="close" data-dismiss="alert">
-                <small><sup>x</sup></small>
-            </button> -->
+        <div id = "myAlert" class="alert alert-warning alert-dismissable" role="alert">    
             {{ message }}
         </div>
     {% endfor %}
@@ -19,8 +16,8 @@ Todo List
         {% for things in all_items %}
             {% if things.completed %}
                 <tr class="table-secondary">
-                    <td>
-                        <a type="button" class="btn btn-light" href="{% url 'edit' things.id %}">{{things.item}}</a>
+                    <td style="vertical-align: middle; padding-left: 22px;">
+                        <h10><del>{{things.item}}</del></h10>
                     </td> 
                     <td><center><a href="{% url 'uncross' things.id %}">
                         <button type="button" class="btn btn-primary">Mark Undone</button>
