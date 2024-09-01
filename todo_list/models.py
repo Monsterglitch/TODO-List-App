@@ -1,8 +1,9 @@
 from django.db import models
 
 class List(models.Model):
-    item = models.CharField(max_length=250)
+    id = models.AutoField(primary_key=True)  # Auto-incrementing integer field
+    item = models.CharField(max_length=200)
     completed = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.item + ' | ' + str(self.completed)#It should be a string not a boolean
+        return self.item

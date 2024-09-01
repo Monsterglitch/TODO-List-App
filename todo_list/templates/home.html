@@ -6,40 +6,110 @@ Todo List
 {% block content %}
 {% if messages %}
     {% for message in messages %}
-        <div id = "myAlert" class="alert alert-warning alert-dismissable" role="alert">    
+        <div id="myAlert" class="alert alert-warning alert-dismissable" role="alert">    
             {{ message }}
         </div>
     {% endfor %}
 {% endif %}
-    {% if all_items %}
-    <table class="table table">    
-        {% for things in all_items %}
-            {% if things.completed %}
-                <tr class="table-secondary">
-                    <td style="vertical-align: middle; padding-left: 22px;">
-                        <h10><del>{{things.item}}</del></h10>
-                    </td> 
-                    <td><center><a href="{% url 'uncross' things.id %}">
-                        <button type="button" class="btn btn-primary">Mark Undone</button>
-                    </a></center></td>
-                    <td><center><a href="{% url 'delete' things.id %}">
-                        <button type="button" class="btn btn-danger">Delete</button>
-                    </a></center></td>
-                </tr>
-            {% else %} 
-                <tr>
-                    <td><a href="{% url 'edit' things.id %}">
-                        <button type="button" class="btn btn-light">{{things.item}}</button>
-                    </a></td> 
-                    <td><center><a href="{% url 'cross_off' things.id %}">
-                        <button type="button" class="btn btn-primary">Mark Done</button>
-                    </a></center></td>
-                    <td><center><a href="{% url 'delete' things.id %}">
-                        <button type="button" class="btn btn-danger">Delete</button>
-                    </a></center></td>
-                </tr>
-            {% endif %}
-        {% endfor %}
-    </table>
-    {% endif %}
+
+<table id="holder" class="table table">
+    <!-- Table rows will be added here by JavaScript -->
+</table>
+
+<script>
+    // Ensure functions are in the global scope
+    function markUndone(id) {
+        $.ajax({
+            type: 'POST',
+            url: "/uncross/" + id + "/",
+            headers: { 'X-CSRFToken': '{{ csrf_token }}' },  // Add CSRF token
+            success: function(response) {
+                if (response.status === 'success') {
+                    fetchData();
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function(response) {
+                alert("An error occurred while marking the item as undone.");
+            }
+        });
+    }
+
+    function markDone(id) {
+        $.ajax({
+            type: 'POST',
+            url: "/cross_off/" + id + "/",
+            headers: { 'X-CSRFToken': '{{ csrf_token }}' },  // Add CSRF token
+            success: function(response) {
+                if (response.status === 'success') {
+                    fetchData();
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function(response) {
+                alert("An error occurred while marking the item as done.");
+            }
+        });
+    }
+
+    function deleteItem(id) {
+        $.ajax({
+            type: 'POST',
+            url: "/delete/" + id + "/",
+            headers: { 'X-CSRFToken': '{{ csrf_token }}' },  // Add CSRF token
+            success: function(response) {
+                if (response.status === 'success') {
+                    fetchData();
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function(response) {
+                alert("An error occurred while deleting the item.");
+            }
+        });
+    }
+
+    function fetchData() {
+        $.ajax({
+            type: 'GET',
+            url: "{% url 'getdata' %}",
+            success: function(response) {
+                var container = $('#holder');
+                container.empty(); // Clear the table
+
+                response.data.forEach(function(item) {
+                    var row = '<tr>' ;
+                    
+                    if (item.completed) {
+                        row += '<td style="vertical-align: middle; ">' +
+                            '<h10><del>' + item.item + '</del></h10>' +
+                            '</td>';
+                        row += '<td><center><button class="btn btn-primary" onclick="markUndone(' + item.id + ')">Mark Undone</button></center></td>';
+                    } else {
+                        row += '<td><a href="/edit/' + item.id + '">' +
+                            '<button type="button" class="btn ">' + item.item + '</button>' +
+                            '</a></td>';
+                        row += '<td><center><button class="btn btn-primary" onclick="markDone(' + item.id + ')">Mark Done</button></center></td>';
+                    }
+                    
+                    row += '<td><center><button class="btn btn-danger" onclick="deleteItem(' + item.id + ')">Delete</button></center></td>';
+                    
+                    row += '</tr>';
+                    
+                    container.append(row);
+                });
+            },
+            error: function(response) {
+                alert("An error occurred while fetching data.");
+            }
+        });
+    }
+
+    $(document).ready(function() {
+        fetchData();
+    });
+</script>
 {% endblock %}
